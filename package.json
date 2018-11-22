@@ -1,0 +1,53 @@
+{
+  "name": "postinstaller",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/cli.js",
+  "bin": "src/cli.js",
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "keywords": [],
+  "author": "Andreas Pizsa <hopster@gmail.com> (https://github.com/AndreasPizsa)",
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/cli": "^7.2.1",
+    "@commitlint/config-conventional": "^7.1.2",
+    "ava": "1.0.0-rc.2",
+    "husky": "^1.2.0",
+    "nyc": "^13.1.0",
+    "standard-version": "^4.4.0",
+    "xo": "^0.23.0"
+  },
+  "xo": {
+    "semicolon": false,
+    "space": true
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "xhusky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "postinstaller": {
+    "devDependencies.husky?": {
+      "husky.hooks.commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    },
+    "devDependencies.@commitlint/config-conventional?": {
+      "commitlint.extends[]": "@commitlint/config-conventional"
+    },
+    "postinstaller": {
+      "add your config here": true,
+      "see": "https://postinstaller.now.sh/"
+    }
+  },
+  "dependencies": {
+    "debug": "^4.1.0",
+    "lodash.get": "^4.4.2",
+    "lodash.set": "^4.3.2"
+  }
+}
