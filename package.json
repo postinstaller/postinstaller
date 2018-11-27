@@ -1,7 +1,7 @@
 {
   "name": "postinstaller",
   "version": "0.0.3",
-  "description": "",
+  "description": "Publish dev-friendly ❤️ zero-configuration packages.",
   "main": "src/cli.js",
   "bin": {
     "postinstaller": "src/cli.js"
@@ -20,6 +20,7 @@
     "uninstall",
     "preuninstall",
     "zeroconfig",
+    "zero configuration",
     "config",
     "script"
   ],
@@ -55,6 +56,10 @@
     }
   },
   "postinstaller": {
+    "scripts": {
+      "postinstall": "postinstaller",
+      "preuninstall": "postinstaller"
+    },
     "postinstaller": {
       "add your config here": true,
       "see": "https://npmjs.com/postinstaller#readme"

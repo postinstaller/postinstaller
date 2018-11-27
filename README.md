@@ -1,12 +1,9 @@
-<center><h1>
-✨🎩
-postinstaller
-</h1>
+✨🎩 postinstaller
+=================
+
 [![postinstaller](https://postinstaller-badge.now.sh/postinstaller?style=flat-square)](https://github.com/postinstaller/postinstaller) [![npm](https://flat.badgen.net/npm/v/postinstaller)]() [![npm](https://flat.badgen.net/npm/license/postinstaller)]() [![npm](https://flat.badgen.net/travis/postinstaller/postinstaller)]() [![npm](https://flat.badgen.net/coveralls/c/github/postinstaller/postinstaller)]()
 
-</center>
-
-> Postinstaller makes packages a lot easier to use and saves hours of precious developer time by configuring packages automatically.
+> Publish dev-friendly ❤️ zero-configuration packages.
 
 Motivation
 ----------
