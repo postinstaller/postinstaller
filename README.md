@@ -6,7 +6,7 @@ postinstaller
 
 </center>
 
-Postinstaller makes packages a lot easier to use and saves hours of precious developer time.
+> Postinstaller makes packages a lot easier to use and saves hours of precious developer time by configuring packages automatically.
 
 Motivation
 ----------
