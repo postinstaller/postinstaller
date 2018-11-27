@@ -1,77 +1,71 @@
-const debug = require('debug')('postinstaller')
-const get = require('lodash.get')
-const set = require('lodash.set')
+const cloneDeep = require('clone-deep')
 
-module.exports = install
+module.exports = {
+  install(recipe, where, options) {
+    return apply(recipe, where, apply.add, options)
+  },
+  uninstall(recipe, where, options) {
+    return apply(recipe, where, apply.remove, options)
+  }
+}
 
-function install(config, source, operators) {
-  console.log(operators)
+function apply(recipe, source, operators, options = {}) {
+  const reporter = Object.assign({
+    error() {},
+    success() {}
+  }, options.reporter)
+
+  source = cloneDeep(source)
+
   return Object
-    .entries(config)
+    .entries(recipe)
     .reduce((result, [key, value]) => {
-      const operator =
-        findOperatorFor(operators, key, value) ||
-        setOperator
+      const operator = findOperatorFor(operators, key, value)
+      if (!operator) {
+        reporter.error('Syntax error', key)
+        return result
+      }
 
-      return operator(
-        (config, source) => install(config, source, operators),
+      const context = {
+        ...options,
         source,
-        result,
-        key,
-        value)
-    }, {...source})
+        apply: recipe => apply(recipe, source, operators, options)
+      }
+
+      try {
+        return operator(
+          result,
+          value,
+          key,
+          context)
+      } catch (error) {
+        reporter.error(error)
+        return result
+      }
+    }, source)
 
   function findOperatorFor(array, key, value) {
-    for (const operator of array) {
-      const result = operator(key, value)
+    for (const checkOperator of array) {
+      const result = checkOperator(key, value)
       if (result) {
         return result
       }
     }
   }
 }
-install.add = []
-install.remove = []
 
-function ConditionalOperator(key) {
-  return key.includes('?') ? (install, source, result, condition, value) => {
-    const key = condition.split('?').slice(0, -1).join('.')
-    const conditionKeyExists = get(source, key) !== undefined
-    debug('Found condition', key, conditionKeyExists)
-    return conditionKeyExists ?
-      {...result, ...install(value, source)} :
-      result
-  } : undefined
-}
-install.add.push(ConditionalOperator)
+apply.add = []
+apply.remove = []
 
-function AddToArrayOperator(key) {
-  if (!key.endsWith('[]')) {
-    return false
-  }
-
-  return (install, source, result, key, value) => {
-    key = key.substr(key, key.length - 2)
-    let currentValue = get(source, key)
-    if (currentValue === null || currentValue === undefined) {
-      currentValue = []
-    } else if (!Array.isArray(currentValue)) {
-      currentValue = [currentValue]
-    }
-
-    if (currentValue.includes(value)) {
-      return result
-    }
-
-    return {
-      ...result,
-      [key]: [...currentValue, value]
-    }
-  }
-}
-install.add.push(AddToArrayOperator)
-
-function setOperator(install, source, target, key, value) {
-  return set(target, key, value)
-}
-install.add.push(setOperator)
+new Array(...[
+  './operators/existential',
+  './operators/add-to-array',
+  // `Set` should be last so that it is the fallback operator
+  './operators/set'
+])
+  .map(require)
+  .map(f => f())
+  .forEach(({add, remove}) => {
+    apply.add.push(add)
+    apply.remove.push(remove)
+  })

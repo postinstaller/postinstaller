@@ -3,16 +3,30 @@
   "version": "0.0.1",
   "description": "",
   "main": "src/cli.js",
-  "bin": "src/cli.js",
-  "scripts": {
-    "test": "xo && ava"
+  "bin": {
+    "postinstaller": "src/cli.js"
   },
-  "keywords": [],
+  "scripts": {
+    "test": "xo && nyc ava",
+    "postinstall": "postinstaller",
+    "preuninstall": "postinstaller"
+  },
+  "keywords": [
+    "install",
+    "installer",
+    "postinstall",
+    "uninstall",
+    "preuninstall",
+    "zeroconfig",
+    "config",
+    "script"
+  ],
   "author": "Andreas Pizsa <hopster@gmail.com> (https://github.com/AndreasPizsa)",
   "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "^7.2.1",
     "@commitlint/config-conventional": "^7.1.2",
+    "arrify": "^1.0.1",
     "ava": "1.0.0-rc.2",
     "husky": "^1.2.0",
     "nyc": "^13.1.0",
@@ -21,33 +35,60 @@
   },
   "xo": {
     "semicolon": false,
-    "space": true
+    "space": true,
+    "rules": {
+      "func-names": "off",
+      "no-negated-condition": "warn",
+      "operator-linebreak": [
+        "error",
+        "before",
+        {
+          "overrides": {
+            "x?": "ignore",
+            "x:": "ignore"
+          }
+        }
+      ]
+    }
+  },
+  "postinstaller": {
+    "scripts.postinstall": "postinstaller",
+    "scripts.preuninstall": "postinstaller",
+    "keywords[]": "postinstaller",
+    "if has devDependencies.husky": {
+      "husky.hooks.commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    },
+    "if has devDependencies.@commitlint/config-conventional": {
+      "commitlint.extends[]": "@commitlint/config-conventional"
+    },
+    "postinstaller": {
+      "add your config here": true,
+      "see": "https://npmjs.com/postinstaller#readme"
+    }
+  },
+  "dependencies": {
+    "clone-deep": "^4.0.1",
+    "debug": "^4.1.0",
+    "deep-equal": "^1.0.1",
+    "graceful-fs": "^4.1.15",
+    "lodash.get": "^4.4.2",
+    "lodash.isempty": "^4.4.0",
+    "lodash.isequal": "^4.5.0",
+    "lodash.set": "^4.3.2",
+    "lodash.unset": "^4.5.2",
+    "log-symbols": "^2.2.0",
+    "npmlog": "^4.1.2",
+    "resolve-pkg": "^1.0.0",
+    "yargs": "^12.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   },
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "xhusky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
-  "postinstaller": {
-    "devDependencies.husky?": {
-      "husky.hooks.commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    },
-    "devDependencies.@commitlint/config-conventional?": {
-      "commitlint.extends[]": "@commitlint/config-conventional"
-    },
-    "postinstaller": {
-      "add your config here": true,
-      "see": "https://postinstaller.now.sh/"
-    }
-  },
-  "dependencies": {
-    "debug": "^4.1.0",
-    "lodash.get": "^4.4.2",
-    "lodash.set": "^4.3.2"
   }
 }

@@ -1,0 +1,24 @@
+{
+  "name": "pkg-test",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@postinstaller/cli": "file:../.."
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "set",
+    "postinstall": "postinstaller",
+    "preuninstall": "postinstaller"
+  },
+  "author": "Andreas Pizsa <hopster@gmail.com> (https://github.com/AndreasPizsa)",
+  "license": "MIT",
+  "keywords": [
+    "zeroconfig"
+  ],
+  "postinstaller": {
+    "add your config here": true,
+    "see": "https://npmjs.com/postinstaller#readme"
+  }
+}
