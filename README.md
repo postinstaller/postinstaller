@@ -1,15 +1,20 @@
-✨🎩 postinstaller
-===============
+<center><h1>
+✨🎩
+postinstaller
+</h1>
+[![postinstaller](https://postinstaller-badge.now.sh/postinstaller?style=flat-square)](https://github.com/postinstaller/postinstaller) [![npm](https://flat.badgen.net/npm/v/postinstaller)]() [![npm](https://flat.badgen.net/npm/license/postinstaller)]() [![npm](https://flat.badgen.net/travis/postinstaller/postinstaller)]() [![npm](https://flat.badgen.net/coveralls/c/github/postinstaller/postinstaller)]()
 
-![postinstaller](https://postinstaller-badge.now.sh/postinstaller?style=flat-square)
+</center>
 
-> ~~The missing~~ automagic configuration for npm packages.
+Postinstaller makes packages a lot easier to use and saves hours of precious developer time.
 
 Motivation
 ----------
-Adding a new package to your project often requires manual configuration of `package.json`, which can be tedious and error prone.
+Adding new packages to a project often requires manual configuration of `package.json`, which can be tedious, error prone and frustrating.
 
-Postinstaller configures `package.json` automatically, and also cleans up upon uninstall.
+Wouldn’t life be great if we could just add a package and be done?
+
+**Postinstaller** does exctly that. It’s a **tool for package authors** that configures `package.json` automatically when their package gets installed - and also cleans up again if the package gets removed.
 
 Features
 --------
