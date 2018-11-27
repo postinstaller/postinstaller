@@ -53,15 +53,6 @@
     }
   },
   "postinstaller": {
-    "scripts.postinstall": "postinstaller",
-    "scripts.preuninstall": "postinstaller",
-    "keywords[]": "postinstaller",
-    "if has devDependencies.husky": {
-      "husky.hooks.commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    },
-    "if has devDependencies.@commitlint/config-conventional": {
-      "commitlint.extends[]": "@commitlint/config-conventional"
-    },
     "postinstaller": {
       "add your config here": true,
       "see": "https://npmjs.com/postinstaller#readme"

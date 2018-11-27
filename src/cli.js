@@ -20,6 +20,11 @@ log.silly('', {
   cwd: process.cwd()
 })
 
+if (npmRunDir === process.cwd()) {
+  log.silly('', 'Not installing on self, exiting.')
+  process.exit(0)
+}
+
 yargs // eslint-disable-line no-unused-expressions
   .scriptName('postinstaller')
   .options({
