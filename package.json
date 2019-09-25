@@ -10,7 +10,7 @@
     "pretest": "xo",
     "test": "nyc ava",
     "release": "standard-version",
-    "postinstall": "./src/cli.js",
+    "postinstall": "node ./src/cli.js",
     "preuninstall": "postinstaller"
   },
   "keywords": [
