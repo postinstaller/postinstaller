@@ -1,6 +1,6 @@
 {
   "name": "postinstaller",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Publish dev-friendly ❤️ zero-configuration packages.",
   "main": "src/cli.js",
   "bin": {
